@@ -1,0 +1,106 @@
+
+.back1 {
+    background-image: url("back1.jpg");
+    width: 1920px;
+    height: 1080px;
+    z-index: -1;
+    position: fixed;
+}
+
+.back2 {
+    background-image: url("back2.jpg");
+    width: 1920px;
+    height: 1200px;
+    z-index: -1;
+    position: fixed;
+}
+
+.back3 {
+    background-image: url("back3.jpg");
+    width: 1920px;
+    height: 1080px;
+    z-index: -1;
+    position: fixed;
+}
+
+#accordion div {
+    height: 40vh;
+}
+
+#slider {
+    margin-left: 35px;
+}
+
+#footer {
+
+}
+
+.firstoct {
+    background-color: rgba(60, 120, 60, 0.3);
+}
+
+.secondoct {
+    background-color: rgba(180, 90, 90, 0.3);
+}
+
+.smalloct {
+    background-color: rgba(30, 30, 60, 0.3);
+}
+
+.bigoct {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.controct {
+    background-color: rgba(0, 60, 60, 0.3);
+}
+
+.thirdoct {
+    background-color: rgba(60, 0, 60, 0.3);
+}
+
+#notes {
+    width: 100%;
+}
+
+.empty {
+    height: 300px;
+}
+
+.ui-controlgroup-vertical {
+    width: 150px;
+}
+
+.ui-controlgroup.ui-controlgroup-vertical > button.ui-button,
+.ui-controlgroup.ui-controlgroup-vertical > .ui-controlgroup-label {
+    text-align: center;
+    width: 200px;
+}
+
+.ui-controlgroup-horizontal .ui-spinner-input {
+    width: 20px;
+}
+
+.invisible {
+    opacity: 0;
+}
+
+#leftMainButton {
+    top: 57vh;
+    position: fixed;
+}
+
+#rightMainButton {
+    top: 57vh;
+    position: fixed;
+}
+
+.bold {
+    font-size: 14px;
+    font-family: Verdana;
+    font-weight: bold;
+}
+
+.opacityGray {
+    background-color: rgba(0, 0, 0, 0.6);
+}

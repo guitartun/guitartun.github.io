@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Гитарный тюнер</title>
+</head>
+<body class="w3-dark-gray">
+
+<div>
+    <div id="backgroundImage" class="back1"></div>
+
+    <div class="w3-bar w3-black">
+        <b class=" w3-bar-item w3-large" id="topText">Тюнер</b>
+    </div>
+    <!------------------------------------------------------------------------------>
+    <div class="slides" id="div1">
+        <div class="w3-row w3-margin-top">
+            <div class="w3-col s4">
+                <div id="slider-range" class="w3-margin-left"></div>
+            </div>
+            <div class="w3-col s5">
+                <div id="slider">
+                    <div id="custom-handle" class="ui-slider-handle"></div>
+                </div>
+            </div>
+            <div class="w3-col s3 w3-right w3-center w3-large">
+                Отклонение
+            </div>
+        </div>
+        <div class="w3-row">
+            <div class="w3-col s9">
+                <div class="w3-container">
+                    <canvas id="canvas1"></canvas>
+                </div>
+            </div>
+            <div class="w3-col s3">
+                <div class="w3-container">
+                    <canvas id="canvas2"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="w3-row">
+            <div class="w3-col s12">
+                <div class="w3-container">
+                    <table id="notes" class="bold opacityGray w3-center">
+                        <thead>
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col">0</th>
+                            <th scope="col">1</th>
+                            <th scope="col">2</th>
+                            <th scope="col">3</th>
+                            <th scope="col">4</th>
+                            <th scope="col">5</th>
+                            <th scope="col">6</th>
+                            <th scope="col">7</th>
+                            <th scope="col">8</th>
+                            <th scope="col">9</th>
+                            <th scope="col">10</th>
+                            <th scope="col">11</th>
+                            <th scope="col">12</th>
+                            <th scope="col">13</th>
+                            <th scope="col">14</th>
+                            <th scope="col">15</th>
+                            <th scope="col">16</th>
+                            <th scope="col">17</th>
+                            <th scope="col">18</th>
+                            <th scope="col">19</th>
+                        </tr>
+                        </thead>
+                        <tbody id="notesBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="empty"></div>
+    </div>
+    <!------------------------------------------------------------------------------>
+    <div class="slides" id="div2">
+        <div class="w3-row w3-margin-top">
+            <div class="w3-col s4 ui-controlgroup-horizontal">
+                <fieldset>
+                    <legend>Алгоритм поиска</legend>
+                    <div>
+                        <select id="algType">
+                            <option value="1" selected>Автокорреляция</option>
+                            <option value="2">Поиск гармоник в спектре</option>
+                        </select>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="w3-col s4 ui-controlgroup-horizontal">
+                <fieldset>
+                    <legend>Изменение тона</legend>
+                    <div class="">
+                        <select id="altTun">
+                            <option value="0" selected>нет</option>
+                            <option value="1">+1 полутон</option>
+                            <option value="2">+2 полутона</option>
+                            <option value="3">+3 полутона</option>
+                            <option value="4">+4 полутона</option>
+                            <option value="5">+5 полутонов</option>
+                            <option value="6">+6 полутонов</option>
+                            <option value="-1">-1 полутон</option>
+                            <option value="-2">-2 полутона</option>
+                            <option value="-3">-3 полутона</option>
+                            <option value="-4">-4 полутона</option>
+                            <option value="-5">-5 полутонов</option>
+                            <option value="-6">-6 полутонов</option>
+                            <option value="-7">-7 полутонов</option>
+                            <option value="-8">-8 полутонов</option>
+                            <option value="-9">-9 полутонов</option>
+                            <option value="-10">-10 полутонов</option>
+                            <option value="-11">-11 полутонов</option>
+                            <option value="-12">-12 полутонов</option>
+                        </select>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>drop</legend>
+                    <div class="">
+                        <select id="dropTun">
+                            <option value="0" selected>нет</option>
+                            <option value="-2">да</option>
+                        </select>
+                    </div>
+                </fieldset>
+
+            </div>
+            <div class="w3-col s4 ui-controlgroup-horizontal">
+                <fieldset>
+                    <legend>Автокорреляция</legend>
+                    <div class="" id="prefTime">
+
+                        <div class="w3-panel w3-blue w3-text-black">
+                            FFTSize
+                        </div>
+                        <select class="w3-select" id="fft1">
+                            <option value="8192 selected" >8192</option>
+                            <option value="16384">16384</option>
+                        </select>
+
+                        <div class="w3-panel w3-blue w3-text-black">
+                            Smooth time
+                        </div>
+                        <select class="w3-select" id="smoothTime1">
+                            <option value="0.1">0.1</option>
+                            <option value="0.2">0.2</option>
+                            <option value="0.3">0.3</option>
+                            <option value="0.4">0.4</option>
+                            <option value="0.5">0.5</option>
+                            <option value="0.6">0.6</option>
+                            <option value="0.7">0.7</option>
+                            <option value="0.8">0.8</option>
+                            <option value="0.9" selected>0.9</option>
+                            <option value="0.95">0.95</option>
+                        </select>
+
+
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Спектр</legend>
+                    <div class=" w3-hide" id="prefFreq">
+
+                        <div class="w3-panel w3-blue w3-text-black">
+                            FFTSize
+                        </div>
+                        <select class="w3-select" id="fft2">
+                            <option value="8192">8192</option>
+                            <option value="16384" selected>16384</option>
+                            <option value="32768">32768</option>
+                        </select>
+
+                        <div class="w3-panel w3-blue w3-text-black">
+                            Сколько гармоник просматривать?
+                        </div>
+                        <select class="w3-select " id="harmonics">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5" selected>5</option>
+                            <option value="6">6</option>
+                        </select>
+
+                        <div class="w3-panel w3-blue w3-text-black">
+                            Усиление
+                        </div>
+                        <select class="w3-select" id="dbells">
+                            <option value="-90">-90dB</option>
+                            <option value="-80" selected>-80dB</option>
+                            <option value="-70">-70dB</option>
+                            <option value="-60">-60dB</option>
+                            <option value="-50">-50dB</option>
+                            <option value="-40">-40dB</option>
+                        </select>
+
+                        <div class="w3-panel w3-blue w3-text-black">
+                            Smooth time
+                        </div>
+                        <select class="w3-select" id="smoothTime2">
+                            <option value="0.1">0.1</option>
+                            <option value="0.2">0.2</option>
+                            <option value="0.3">0.3</option>
+                            <option value="0.4">0.4</option>
+                            <option value="0.5">0.5</option>
+                            <option value="0.6">0.6</option>
+                            <option value="0.7">0.7</option>
+                            <option value="0.8">0.8</option>
+                            <option value="0.9" selected>0.9</option>
+                            <option value="0.95">0.95</option>
+                        </select>
+
+
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+    <!------------------------------------------------------------------------------>
+    <!------------------------------------------------------------------------------>
+    <div class="slides" id="div3">
+        <div id="tabs" class="w3-margin-top">
+            <ul>
+                <li><a href="#tabs-1">Nunc tincidunt</a></li>
+                <li><a href="#tabs-2">Proin dolor</a></li>
+                <li><a href="#tabs-3">Aenean lacinia</a></li>
+            </ul>
+            <div id="tabs-1">
+                <p>Proin elit arcu, rutrum commodo, vehicula tempus, commodo a, risus. Curabitur nec arcu. Donec
+                    sollicitudin mi sit amet mauris. Nam elementum quam ullamcorper ante. Etiam aliquet massa et lorem.
+                    Mauris dapibus lacus auctor risus. Aenean tempor ullamcorper leo. Vivamus sed magna quis ligula
+                    eleifend adipiscing. Duis orci. Aliquam sodales tortor vitae ipsum. Aliquam nulla. Duis aliquam
+                    molestie erat. Ut et mauris vel pede varius sollicitudin. Sed ut dolor nec orci tincidunt interdum.
+                    Phasellus ipsum. Nunc tristique tempus lectus.</p>
+            </div>
+            <div id="tabs-2">
+                <p>Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra massa metus id
+                    nunc. Duis scelerisque molestie turpis. Sed fringilla, massa eget luctus malesuada, metus eros
+                    molestie lectus, ut tempus eros massa ut dolor. Aenean aliquet fringilla sem. Suspendisse sed ligula
+                    in ligula suscipit aliquam. Praesent in eros vestibulum mi adipiscing adipiscing. Morbi facilisis.
+                    Curabitur ornare consequat nunc. Aenean vel metus. Ut posuere viverra nulla. Aliquam erat volutpat.
+                    Pellentesque convallis. Maecenas feugiat, tellus pellentesque pretium posuere, felis lorem euismod
+                    felis, eu ornare leo nisi vel felis. Mauris consectetur tortor et purus.</p>
+            </div>
+            <div id="tabs-3">
+                <p>Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate, pede vel
+                    vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem. Vestibulum non ante. Class
+                    aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce sodales.
+                    Quisque eu urna vel enim commodo pellentesque. Praesent eu risus hendrerit ligula tempus pretium.
+                    Curabitur lorem enim, pretium nec, feugiat nec, luctus a, lacus.</p>
+                <p>Duis cursus. Maecenas ligula eros, blandit nec, pharetra at, semper at, magna. Nullam ac lacus. Nulla
+                    facilisi. Praesent viverra justo vitae neque. Praesent blandit adipiscing velit. Suspendisse
+                    potenti. Donec mattis, pede vel pharetra blandit, magna ligula faucibus eros, id euismod lacus dolor
+                    eget odio. Nam scelerisque. Donec non libero sed nulla mattis commodo. Ut sagittis. Donec nisi
+                    lectus, feugiat porttitor, tempor ac, tempor vitae, pede. Aenean vehicula velit eu tellus interdum
+                    rutrum. Maecenas commodo. Pellentesque nec elit. Fusce in lacus. Vivamus a libero vitae lectus
+                    hendrerit hendrerit.</p>
+            </div>
+        </div>
+    </div>
+    <!------------------------------------------------------------------------------>
+    <button class="w3-button w3-display-left opacityGray ui-icon-alert" id="leftMainButton">&#10094;</button>
+    <button class="w3-button w3-display-right opacityGray" id="rightMainButton">&#10095;</button>
+</div>
+
+<div class="w3-bar w3-black w3-bottom w3-medium" id="footer">
+    <p class="w3-left w3-margin-left">A.Sumaneev VyatSU 2017</p>
+    <div class="ya-share2 w3-right w3-display-bottomright w3-margin-bottom w3-margin-right"
+         data-services="collections,vkontakte,facebook,odnoklassniki,moimir,gplus,twitter,lj,whatsapp,telegram"
+         data-counter="">
+    </div>
+</div>
+
+<script src="js/jquery-3.2.1.js"></script>
+<script src="webrtc-adapter/out/adapter.js"></script>
+<script src="main.js"></script>
+<link rel="stylesheet" href="css/w3.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="jquery-ui-1.12.1.custom/jquery-ui.css"/>
+<link rel="stylesheet" href="jquery-ui-1.12.1.custom/jquery-ui.structure.css">
+<link rel="stylesheet" href="jquery-ui-1.12.1.custom/jquery-ui.theme.css">
+<script src="jquery-ui-1.12.1.custom/jquery-ui.js"></script>
+<script src="https://yastatic.net/es5-shims/0.0.2/es5-shims.min.js"></script>
+<script src="https://yastatic.net/share2/share.js"></script>
+</body>
+</html>
