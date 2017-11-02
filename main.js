@@ -165,9 +165,7 @@ $(function () {
 });
 
 
-$(function () {
-    $("#tabs").tabs();
-});
+
 
 $("#slider-range").width($('#canvas1').width() / 2.1);
 $("#slider").width($('#canvas1').width() / 2.1);
@@ -227,10 +225,6 @@ function showDivs(n) {
         }
         case 1: {
             $('#topText').text('Настройки');
-            break;
-        }
-        case 2: {
-            $('#topText').text('О программе');
             break;
         }
     }
