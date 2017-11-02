@@ -148,8 +148,8 @@ $(function () {
     $("#slider-range").slider({
         range: true,
         min: 0,
-        max: 1000,
-        values: [0, 1000],
+        max: 2000,
+        values: [0, 2000],
         slide: function (event, ui) {
             //  $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
             leftFrequency = parseInt(ui.values[0]);
