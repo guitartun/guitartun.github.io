@@ -647,14 +647,14 @@ function drawGraph() {
             ctx1.fillStyle = 'rgba(250,250,250,0.7)';
             ctx1.fillRect(i * barWidth - frequencyShift * barWidth, canvas1Height - barHeight / 2, barWidth, barHeight / 2);
         }
-        ctx1.fillStyle = "rgba(50,50,100,0.9)";
+        ctx1.fillStyle = "rgba(0,0,250,0.9)";
         let I = frequencyToI(fc);
         for (let harmonic = I; harmonic < (harm / oberton + 1) * I; harmonic += Math.round(I / oberton)) {
             ctx1.fillRect(harmonic * barWidth - frequencyShift * barWidth, 0, barWidth, canvas1Height);
         }
-        ctx1.fillStyle = "rgba(0,150,0,0.8)";
+        ctx1.fillStyle = "rgba(0,250,0,0.8)";
         ctx1.fillRect(leftFrequency * barWidth - frequencyShift * barWidth, 0, barWidth, canvas1Height);
-        ctx1.fillStyle = "rgba(150,0,0,0.8)";
+        ctx1.fillStyle = "rgba(250,0,0,0.8)";
         ctx1.fillRect(rightFrequency * barWidth - frequencyShift * barWidth, 0, barWidth, canvas1Height);
         drawNote(fc);
 
