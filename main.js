@@ -1,5 +1,5 @@
-var canvas1 = $('#canvas1');
-var canvas2 = $('#canvas2');
+let canvas1 = $('#canvas1');
+let canvas2 = $('#canvas2');
 
 canvas1.prop('width', document.body.clientWidth * 0.70);
 canvas1.prop('height', 240);
@@ -24,36 +24,37 @@ $(function () {
     });
 });
 
-var strings = [329.63, 246.94, 196.00, 146.83, 110.00, 82.407];
-var noteStrings = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
+const strings = [329.63, 246.94, 196.00, 146.83, 110.00, 82.407];
+const noteStrings = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
 
 function noteFromPitch(frequency) {
-    var noteNum = 12 * (Math.log(frequency / 32.70) / Math.log(2) );
+    const noteNum = 12 * (Math.log(frequency / 32.70) / Math.log(2) );
     return Math.round(noteNum % 12);
 }
 
 $(function () {
-    var table = document.getElementById("notesBody");
-    var tr = "";
-    var td = "";
-    var root = Math.pow(2, (1 / 12));
-    for (var i = 0; i < 6; i++) {
+    const table = document.getElementById("notesBody");
+    let tr = "";
+    let td = "";
+    const root = Math.pow(2, (1 / 12));
+    for (let i = 0; i < 6; i++) {
         td = '<th scope="row">' + (i + 1) + '</th>';
-        for (var j = 0; j < 20; j++) {
-            var fr = (strings[i] * Math.pow(root, j)).toFixed(1);
+        for (let j = 0; j < 20; j++) {
+            const fr = (strings[i] * Math.pow(root, j)).toFixed(1);
             td += "<td>" + fr + "<br>" + noteStrings[noteFromPitch(fr)] + "</td>";
         }
         tr += "<tr>" + td + "</tr>";
     }
     table.innerHTML = tr;
     console.log(root);
+
 });
 
 function colorTable() {
     $(function () {
-        $("#notesBody tr").each(function () {
+        $("#notesBody").find("tr").each(function () {
             $("td", this).each(function () {
-                var value = parseFloat(this.innerText);
+                const value = parseFloat(this.innerText);
                 if (value > 65 && value < 125) {
                     $(this).addClass("bigoct");
                 }
@@ -75,24 +76,33 @@ function colorTable() {
             });
         });
     });
+    $('td').click(function() {
+        let f=parseInt($(this).html());
+        $("#slider-range").slider("values",0,frequencyToI(f-70));
+        leftFrequency = $("#slider-range").slider("values",0);
+    });
 }
 
-var alttun = 0;
-var drop = 0;
+let alttun = 0;
+let drop = 0;
 
 function alternateTuning() {
-    var table = document.getElementById("notesBody");
-    var tr = "";
-    var td = "";
-    var fr = 0;
-    var root = Math.pow(2, (1 / 12));
-    for (var i = 0; i < 6; i++) {
+    const table = document.getElementById("notesBody");
+    let tr = "";
+    let td = "";
+    let fr = 0;
+    const root = Math.pow(2, (1 / 12));
+    for (let i = 0; i < 6; i++) {
         td = '<th scope="row">' + (i + 1) + '</th>';
-        for (var j = 0; j < 20; j++) {
+        for (let j = 0; j < 20; j++) {
             if (i === 5) {
                 fr = (strings[i] * Math.pow(root, j + alttun + drop)).toFixed(1);
+                fr *= oberton;
+                fr = fr.toFixed(1);
             } else {
                 fr = (strings[i] * Math.pow(root, j + alttun)).toFixed(1);
+                fr *= oberton;
+                fr = fr.toFixed(1);
             }
             td += "<td>" + fr + "<br>" + noteStrings[noteFromPitch(fr)] + "</td>";
         }
@@ -100,7 +110,7 @@ function alternateTuning() {
     }
     table.innerHTML = tr;
     colorTable();
-    console.log(alttun);
+    console.log('alttun ' + alttun);
 }
 
 $(function () {
@@ -118,7 +128,7 @@ $(function () {
     $('#dropTun').selectmenu({
         change:
             function () {
-                drop = parseInt($('#dropTun option:selected').val());
+                drop = parseInt($('#dropTun').find('option:selected').val());
                 console.log(drop);
                 alternateTuning();
             }
@@ -129,15 +139,15 @@ $(function () {
     colorTable();
 });
 
-var rightFrequency = 1500;
-var leftFrequency = 0;
+let rightFrequency = 1500;
+let leftFrequency = 0;
 
 $(function () {
     $("#slider-range").slider({
         range: true,
         min: 0,
-        max: 1500,
-        values: [0, 1500],
+        max: 1000,
+        values: [0, 1000],
         slide: function (event, ui) {
             //  $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
             leftFrequency = parseInt(ui.values[0]);
@@ -166,7 +176,7 @@ $('#prefFreq').addClass('w3-hide');
 $('#slider-range').addClass('w3-hide');
 $('#slider').addClass('w3-hide');
 
-var slideIndex = 1;
+let slideIndex = 1;
 showDivs(slideIndex);
 
 $('#leftMainButton').click(function () {
@@ -194,8 +204,8 @@ $('a').click(function () {
 });
 
 function showDivs(n) {
-    var i;
-    var x = document.getElementsByClassName("slides");
+    let i;
+    const x = document.getElementsByClassName("slides");
     console.log(x);
     if (n > x.length) {
         slideIndex = 1
@@ -203,7 +213,6 @@ function showDivs(n) {
     if (n < 1) {
         slideIndex = x.length
     }
-    ;
     for (i = 0; i < x.length; i++) {
         x[i].style.display = "none";
         $('#backgroundImage').removeClass('back1');
@@ -229,10 +238,10 @@ function showDivs(n) {
     console.log('back' + slideIndex);
 }
 
-var audioCtx;
-var source;
-var ctx1;
-var ctx2;
+let audioCtx;
+let source;
+let ctx1;
+let ctx2;
 
 canvas1 = document.getElementById("canvas1");
 ctx1 = canvas1.getContext("2d");
@@ -240,25 +249,25 @@ canvas2 = document.getElementById("canvas2");
 ctx2 = canvas2.getContext("2d");
 
 
-var algorithm = 1; //метода поиска ноты
-var timeDomainAnalyzer;
-var timeDomainData; //массив данных во временной области
-var frequencyDomainAnalyzer;
-var frequencyDomainData; //массив данных в частотной области
-var canvas1Width = canvas1.width;
-var canvas1Height = canvas1.height;
-var canvas2Width = canvas2.width;
-var canvas2Height = canvas2.height;
-var barWidth;
-var sliceWidth;
-var halfCanvasHeight;
-var frequencyShift = 0;
-var harm = 5;
+let algorithm = 1; //метода поиска ноты
+let timeDomainAnalyzer;
+let timeDomainData; //массив данных во временной области
+let frequencyDomainAnalyzer;
+let frequencyDomainData; //массив данных в частотной области
+let canvas1Width = canvas1.width;
+let canvas1Height = canvas1.height;
+let canvas2Width = canvas2.width;
+let canvas2Height = canvas2.height;
+let barWidth;
+let sliceWidth;
+let halfCanvasHeight;
+let frequencyShift = 0;
+let harm = 5;
 
 
 audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-var biquadFilter1 = audioCtx.createBiquadFilter();
-var biquadFilter2 = audioCtx.createBiquadFilter();
+
+
 frequencyDomainAnalyzer = audioCtx.createAnalyser();
 frequencyDomainAnalyzer.minDecibels = -70;
 frequencyDomainAnalyzer.maxDecibels = -20;
@@ -269,33 +278,7 @@ timeDomainAnalyzer = audioCtx.createAnalyser();
 timeDomainAnalyzer.fftSize = 8192;
 timeDomainAnalyzer.smoothingTimeConstant = 0.9;
 console.log("timeDomainAnalyzer.fftSize " + timeDomainAnalyzer.fftSize);
-/*
-navigator.getUserMedia = (navigator.getUserMedia ||
-    navigator.webkitGetUserMedia ||
-    navigator.mozGetUserMedia ||
-    navigator.msGetUserMedia);
 
-    navigator.mediaDevices.getUserMedia({audio: true})
-        .then(function(stream) {
-            // use the stream
-            source = audioCtx.createMediaStreamSource(stream);
-            console.log("audioCtx sampleRate " + audioCtx.sampleRate);
-            if (algorithm == 1) {
-                source.connect(timeDomainAnalyzer);
-                console.log("timeDomainAnalyzer подключен");
-            }
-            else {
-                source.connect(frequencyDomainAnalyzer);
-                console.log("frequencyDomainAnalyzer подключен");
-            }
-
-            visualize();
-        })
-        .catch(function(err) {
-            // handle the error
-            console.log('Возникла ошибка: ' + err);
-        });
-*/
 
 // Older browsers might not implement mediaDevices at all, so we set an empty object first
 if (navigator.mediaDevices === undefined) {
@@ -309,7 +292,7 @@ if (navigator.mediaDevices.getUserMedia === undefined) {
     navigator.mediaDevices.getUserMedia = function (constraints) {
 
         // First get ahold of the legacy getUserMedia, if present
-        var getUserMedia = ( navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
+        let getUserMedia = ( navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
 
         // Some browsers just don't implement it - return a rejected promise with an error
         // to keep a consistent interface
@@ -328,7 +311,7 @@ navigator.mediaDevices.getUserMedia({audio: true, video: false})
     .then(function (stream) {
         source = audioCtx.createMediaStreamSource(stream);
         console.log("audioCtx sampleRate " + audioCtx.sampleRate);
-        if (algorithm == 1) {
+        if (algorithm === 1) {
             source.connect(timeDomainAnalyzer);
             console.log("timeDomainAnalyzer подключен");
         }
@@ -345,8 +328,8 @@ navigator.mediaDevices.getUserMedia({audio: true, video: false})
     });
 
 
-var timeDataLength = timeDomainAnalyzer.fftSize;
-var frequencyDataLength = frequencyDomainAnalyzer.frequencyBinCount;
+let timeDataLength = timeDomainAnalyzer.fftSize;
+let frequencyDataLength = frequencyDomainAnalyzer.frequencyBinCount;
 
 
 function visualize() {
@@ -359,10 +342,12 @@ function visualize() {
 }
 
 
+
+
 $(function () {
     $("#algType").selectmenu({
         change: function (event, data) {
-            var value = data.item.value;
+            const value = data.item.value;
             console.log(value);
             if (value == 1) {
                 try {
@@ -371,6 +356,7 @@ $(function () {
                     $('#prefFreq').addClass('w3-hide');
                     $('#slider-range').addClass('w3-hide');
                     $('#slider').addClass('w3-hide');
+                    $('#oberselect').addClass('w3-hide');
                     source.disconnect(frequencyDomainAnalyzer);
                     source.connect(timeDomainAnalyzer);
                 }
@@ -385,6 +371,7 @@ $(function () {
                     $('#prefFreq').removeClass('w3-hide');
                     $('#slider-range').removeClass('w3-hide');
                     $('#slider').removeClass('w3-hide');
+                    $('#oberselect').removeClass('w3-hide');
                     source.disconnect(timeDomainAnalyzer);
                     source.connect(frequencyDomainAnalyzer);
 
@@ -395,6 +382,18 @@ $(function () {
             }
         }
 
+    });
+});
+
+let oberton = 1;
+
+$(function () {
+    $('#oberton').selectmenu({
+        change: function () {
+            oberton = parseInt($('#oberton option:selected').val());
+            console.log(oberton);
+            alternateTuning();
+        }
     });
 });
 
@@ -426,6 +425,9 @@ $(function () {
             }
     });
 });
+
+
+
 
 $(function () {
     $('#fft1').selectmenu({
@@ -490,28 +492,28 @@ $(window).resize(function () {
 });
 
 function autoCorrelate() {
-    var sampleRate = audioCtx.sampleRate;
-    var MIN_SAMPLES = 0;
-    var GOOD_ENOUGH_CORRELATION = 0.985;
-    var SIZE = timeDataLength;
-    var MAX_SAMPLES = Math.floor(SIZE / 4);
-    var bestOffset = -1;
-    var bestCorrelation = 0;
-    var rms = 0;
-    var foundGoodCorrelation = false;
-    for (var i = 0; i < SIZE; i++) {
-        var val = timeDomainData[i];
+    const sampleRate = audioCtx.sampleRate;
+    const MIN_SAMPLES = 0;
+    const GOOD_ENOUGH_CORRELATION = 0.985;
+    const SIZE = timeDataLength;
+    const MAX_SAMPLES = Math.floor(SIZE / 4);
+    let bestOffset = -1;
+    let bestCorrelation = 0;
+    let rms = 0;
+    let foundGoodCorrelation = false;
+    for (let i = 0; i < SIZE; i++) {
+        let val = timeDomainData[i];
         rms += val * val;
     }
     rms = Math.sqrt(rms / SIZE);
     if (rms < 0.015) //если нет сигнала
         return -1;
 
-    var lastCorrelation = 1;
-    for (var offset = MIN_SAMPLES; offset < MAX_SAMPLES; offset++) {
-        var correlation = 0;
+    let lastCorrelation = 1;
+    for (let offset = MIN_SAMPLES; offset < MAX_SAMPLES; offset++) {
+        let correlation = 0;
 
-        for (i = 0; i < MAX_SAMPLES; i++) {//найдем корреляцию
+        for (let i = 0; i < MAX_SAMPLES; i++) {//найдем корреляцию
             correlation += Math.abs((timeDomainData[i]) - (timeDomainData[i + offset]));
         }
         correlation = 1 - (correlation / MAX_SAMPLES);
@@ -530,17 +532,18 @@ function autoCorrelate() {
 }
 
 function frequencyCorrelate() {
-    var correlation = -1;
-    var bestCorrelation = -1;
-    var baseFrequency = -1;
-    var left = iToFrequency(leftFrequency);
-    var right = iToFrequency(rightFrequency);
-    for (var frequency = left; frequency < right; frequency += 0.5) {
-        var i = frequencyToI(frequency);
-        for (var harmonic = i; harmonic < (harm + 1) * i; harmonic += i) {
+    let correlation = -1;
+    let bestCorrelation = -1;
+    let baseFrequency = -1;
+    const left = iToFrequency(leftFrequency);
+    const right = iToFrequency(rightFrequency);
+    for (let frequency = left; frequency < right; frequency += 0.5) {
+        let i = frequencyToI(frequency);
+        let delta = Math.round(i / oberton);
+        for (let harmonic = i; harmonic < (harm + 1) * delta; harmonic += delta) {
             correlation += frequencyDomainData[harmonic];
         }
-        if ((correlation > bestCorrelation + 20)) {
+        if ((correlation > bestCorrelation + 10)) {
             bestCorrelation = correlation;
             baseFrequency = frequency;
         }
@@ -559,13 +562,13 @@ function frequencyToI(frequency) {
 }
 
 function drawNote(frequency) {
-    var freq;
-    var fc = -1;
-    var cell;
-    var delta = 100;
-    var minDelta = 10;
-    var text = "";
-    var percent = -1;
+    let freq;
+    let fc = -1;
+    let cell;
+    let delta = 100;
+    let minDelta = 10;
+    let text = "";
+    let percent = -1;
     ctx2.clearRect(0, 0, canvas2Width, canvas2Height);
     ctx2.fillStyle = 'rgba(0,0,0,0.25)';
     ctx2.fillRect(0, 0, canvas2Width, canvas2Height);
@@ -611,7 +614,7 @@ function drawNote(frequency) {
 
 function drawGraph() {
     requestAnimationFrame(drawGraph);
-    var fc;
+    let fc;
     if (algorithm === 1) {
         timeDomainAnalyzer.getFloatTimeDomainData(timeDomainData);
         fc = autoCorrelate();
@@ -621,10 +624,10 @@ function drawGraph() {
         ctx1.lineWidth = 1;
         ctx1.strokeStyle = 'rgb(250, 250, 250)';
         ctx1.beginPath();
-        var x = 0;
-        for (i = 0; i < 1200; i += 2) {
-            var v = timeDomainData[i];
-            var y = 2 * v * halfCanvasHeight + halfCanvasHeight;
+        let x = 0;
+        for (let i = 0; i < 1200; i += 2) {
+            let v = timeDomainData[i];
+            let y = 2 * v * halfCanvasHeight + halfCanvasHeight;
             if (i === 0) {
                 ctx1.moveTo(x, y);
             } else {
@@ -643,14 +646,14 @@ function drawGraph() {
         ctx1.clearRect(0, 0, canvas1Width, canvas1Height);
         ctx1.fillStyle = 'rgba(0,0,0,0.25)';
         ctx1.fillRect(0, 0, canvas1Width, canvas1Height);
-        for (var i = leftFrequency; i < rightFrequency; i++) {
-            var barHeight = 2 * frequencyDomainData[i];
+        for (let i = leftFrequency; i < rightFrequency; i++) {
+            let barHeight = 2 * frequencyDomainData[i];
             ctx1.fillStyle = 'rgba(250,250,250,0.7)';
             ctx1.fillRect(i * barWidth - frequencyShift * barWidth, canvas1Height - barHeight / 2, barWidth, barHeight / 2);
         }
         ctx1.fillStyle = "rgba(50,50,100,0.9)";
-        var I = frequencyToI(fc);
-        for (var harmonic = I; harmonic < (harm + 1) * I; harmonic += I) {
+        let I = frequencyToI(fc);
+        for (let harmonic = I; harmonic < (harm / oberton + 1) * I; harmonic += Math.round(I / oberton)) {
             ctx1.fillRect(harmonic * barWidth - frequencyShift * barWidth, 0, barWidth, canvas1Height);
         }
         ctx1.fillStyle = "rgba(0,150,0,0.8)";
@@ -658,6 +661,7 @@ function drawGraph() {
         ctx1.fillStyle = "rgba(150,0,0,0.8)";
         ctx1.fillRect(rightFrequency * barWidth - frequencyShift * barWidth, 0, barWidth, canvas1Height);
         drawNote(fc);
+
     }
 }
 
