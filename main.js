@@ -79,7 +79,9 @@ function colorTable() {
     $('td').click(function() {
         let f=parseInt($(this).html());
         $("#slider-range").slider("values",0,frequencyToI(f-70));
+        $("#slider-range").slider("values",1,frequencyToI(f+70));
         leftFrequency = $("#slider-range").slider("values",0);
+        rightFrequency = $("#slider-range").slider("values",1);
     });
 }
 
