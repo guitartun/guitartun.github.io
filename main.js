@@ -355,6 +355,8 @@ $(function () {
                     $('#oberselect').addClass('w3-hide');
                     source.disconnect(frequencyDomainAnalyzer);
                     source.connect(timeDomainAnalyzer);
+                    oberton=1;
+                    alternateTuning();
                 }
                 catch (e) {
                     console.log(e)
@@ -370,6 +372,9 @@ $(function () {
                     $('#oberselect').removeClass('w3-hide');
                     source.disconnect(timeDomainAnalyzer);
                     source.connect(frequencyDomainAnalyzer);
+                    oberton = parseInt($('#oberton option:selected').val());
+                    console.log(oberton);
+                    alternateTuning();
 
                 }
                 catch (e) {
